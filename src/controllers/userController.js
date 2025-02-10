@@ -121,9 +121,10 @@ module.exports = {
                     accessToken: null,
                 });
             }
-            var token = jwt.sign({ id: existingUser._id }, config.secret, {
+            var token = jwt.sign({ id: existingUser._id, role:existingUser.role }, config.secret, {
                 expiresIn: 86400 // 24 hours
             });
+
 
             let filter;
             let update;
@@ -133,6 +134,7 @@ module.exports = {
             };
             const UpdateUserInfo = await User.findByIdAndUpdate(filter, update);
             if (UpdateUserInfo) {
+
                 return res.status(200).json({
                     user: existingUser,
                     accessToken: token

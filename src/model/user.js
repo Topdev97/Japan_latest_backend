@@ -15,6 +15,9 @@ const userSchema = new Schema({
     accessToken: {
         type: String,
     },
+    role: {
+        type: String
+    },
     fullName: {
         type: String,
     },

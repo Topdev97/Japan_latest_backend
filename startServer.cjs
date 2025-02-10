@@ -15,7 +15,7 @@ const app = express();
 const server = http.createServer(app); // Create an HTTP server from the Express app
 
 const allowedDomains = [
-    'http://localhost:3000', // Client's domain with port
+    'https://japan-latest-frontend-5ooi4gsit-algoangels-projects.vercel.app', // Client's domain with port
 ];
 
 const corsOptions = {

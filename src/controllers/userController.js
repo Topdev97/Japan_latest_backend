@@ -163,24 +163,31 @@ module.exports = {
                 recoveryPasscode: secretKey
             };
             const UpdateUserInfo = await User.findByIdAndUpdate(filter, update);
+
             if (UpdateUserInfo) {
+
                 const recoverylink = `http://${process.env.NODE_ENV_SITE_DOMAIN}/reset-password/?userid=${UpdateUserInfo?._id}&secret=${secretKey}`;
 
-                let mailOptions = {
-                    from: '"Reply Genie" <noreply@replygenie.io>',
-                    to: mail,
-                    subject: 'Password recovery',
-                    text: 'Password recovery',
-                    html: `<div>If you want to reset your password, click the <a href=${recoverylink}>link.</a> Follow the instructions to reset your password and gain access to your account.</div>` // html body
-                };
+                // let mailOptions = {
+                //     from: '"LocalBuzz" <noreply@localbuzz.io>',
+                //     to: mail,
+                //     subject: 'Password recovery',
+                //     text: 'Password recovery',
+                //     html: `<div>If you want to reset your password, click the <a href=${recoverylink}>link.</a> Follow the instructions to reset your password and gain access to your account.</div>` // html body
+                // };
 
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                        return console.log(error);
-                    }
-                    console.log('Message sent: %s', info.messageId);
-                    res.status(200).json({ message: "success" })
-                });
+
+                // transporter.sendMail(mailOptions, (error, info) => {
+                //     if (error) {
+                //         return console.log(error);
+                //     }
+                //     console.log('Message sent: %s', info.messageId);
+                //     res.status(200).json({ message: "success" })
+                // });
+                console.log("=======", recoverylink)
+
+
+                res.status(200).json({ message: "success" })
             }
         } catch (error) {
             if (error.message === 'User not found') {

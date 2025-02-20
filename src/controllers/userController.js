@@ -71,7 +71,7 @@ module.exports = {
     },
 
     createUser: async (req, res) => {
-        const { fullName, email, password, zipcode } = req.body;
+        const { fullName, email, password, phone } = req.body;
         let existingUser;
         try {
             existingUser = await User.findOne({ email })
@@ -83,12 +83,13 @@ module.exports = {
         }
         try {
             const hashedPassword = bcrypt.hashSync(password);
+            console.log("====", hashedPassword)
             const user = new User({
                 fullName,
                 email,
                 password: hashedPassword,
                 updatedDate: new Date(),
-                zipcode
+                phone
             });
             const newUser = await user.save();
             res.status(201).json(newUser);

@@ -1,10 +1,11 @@
 // routes/api/private/index.js
 const express = require('express');
 const router = express.Router();
+const authMiddleware = require('../../../middlewares/authMiddleware')
 
 // Import individual route files
-const stripeRoutes = require('./stripeRoutes');
+const planRoutes = require('./planRoutes');
 
-router.use('/stripe', stripeRoutes);
+router.use('/plan', authMiddleware(['admin']), planRoutes);
 
 module.exports = router;

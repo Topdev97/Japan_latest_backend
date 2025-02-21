@@ -237,7 +237,7 @@ module.exports = {
     },
 
     createUserByAdmin: async (req, res) => {
-        const { companyName, userName, email, phone, storeCount, planId } = req.body;
+        const { companyName, userName, email, phone, storeCount, planId, status = '' } = req.body;
         const password = '123456789'
         let existingUser;
         try {
@@ -258,7 +258,9 @@ module.exports = {
                 updatedDate: new Date(),
                 phone,
                 storeCount,
-                planId: new mongoose.Types.ObjectId(planId)
+                planId: new mongoose.Types.ObjectId(planId),
+                status,
+
             });
             const newUser = await user.save();
             res.status(201).json(newUser);

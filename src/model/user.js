@@ -21,6 +21,9 @@ const userSchema = new Schema({
     accessToken: {
         type: String,
     },
+    status: {
+        type:String,
+    },
     role: {
         type: String,
         default: 'customer'

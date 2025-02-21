@@ -9,6 +9,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const path = require('path');
 const config = require("../config/authConfig");
+const { default: mongoose } = require("mongoose");
 
 
 let transporter = nodemailer.createTransport({
@@ -232,6 +233,39 @@ module.exports = {
             };
             const UpdateUserInfo = await User.findByIdAndUpdate(filter, update);
             return res.status(201).json({ UpdateUserInfo })
+        }
+    },
+
+    createUserByAdmin: async (req, res) => {
+        const { companyName, userName, email, phone, storeCount, planId } = req.body;
+        const password = '123456789'
+        let existingUser;
+        try {
+            existingUser = await User.findOne({ email })
+            if (existingUser) {
+                return res.status(409).json({ message: "exist" })
+            }
+        } catch (err) {
+            console.log(err);
+        }
+        try {
+            const hashedPassword = bcrypt.hashSync(password);
+            const user = new User({
+                userName,
+                companyName,
+                email,
+                password: hashedPassword,
+                updatedDate: new Date(),
+                phone,
+                storeCount,
+                planId: new mongoose.Types.ObjectId(planId)
+            });
+            const newUser = await user.save();
+            res.status(201).json(newUser);
+        }
+        catch (error) {
+            logger.error("Error in createUserController:", error);
+            res.status(500).json({ message: "Error creating user", error: error.message });
         }
     },
 

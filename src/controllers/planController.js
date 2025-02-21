@@ -16,6 +16,17 @@ module.exports = {
         }
     },
 
+    fetchPlans: async (req, res) => {
+      try {
+        const plans = await Plan.find()
+        res.status(201).json(plans);
+      } catch (error) {
+        logger.error("error fetching plans", error);
+        res.status(500).json({ error: "Internal Server Error" });
+
+      }
+    },
+
     updatePlanDetails: async (req, res) => {
         try {
             let filter;

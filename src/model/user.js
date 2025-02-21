@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    fullName: {
+    userName: {
+        type: String,
+    },
+    companyName: {
         type: String,
     },
     email: {
@@ -19,7 +22,8 @@ const userSchema = new Schema({
         type: String,
     },
     role: {
-        type: String
+        type: String,
+        default: 'customer'
     },
     phone: {
         type: String,
@@ -33,8 +37,9 @@ const userSchema = new Schema({
     },
     storeCount: {
         type: Number,
+        default: 0
     },
-    plan: {
+    planId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Plan",
     },

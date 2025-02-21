@@ -269,4 +269,36 @@ module.exports = {
         }
     },
 
+    getUsersByAdmin: async (req, res) => {
+        try {
+            const { planId, name, status } = req.query;
+            let filter = {};
+
+            if (planId) {
+                filter.planId = new mongoose.Types.ObjectId(planId);
+            }
+            if (name) {
+                filter.$or = [
+                    { companyName: { $regex: name, $options: 'i' } },
+                    { userName: { $regex: name, $options: 'i' } }
+                ];
+            }
+            if (status) {
+                filter.status = status;
+            }
+
+
+            const users = await User.find(filter).populate({
+                path: "planId",
+                model: "Plan",
+            })
+            .lean();
+            res.status(200).json(users);
+        } catch (error) {
+            console.error("Error in getUsersByAdmin:", error);
+            res.status(500).json({ message: "Error retrieving users", error: error.message });
+        }
+    }
+
+
 };

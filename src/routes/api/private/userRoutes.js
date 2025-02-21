@@ -4,5 +4,6 @@ const router = express.Router();
 const userController = require('../../../controllers/userController.js');
 
 router.post('/createUserByAdmin', userController.createUserByAdmin);
+router.get('/getUsersByAdmin', userController.getUsersByAdmin);
 
 module.exports = router;

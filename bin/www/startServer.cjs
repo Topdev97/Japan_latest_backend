@@ -19,16 +19,9 @@ const allowedDomains = [
 ];
 
 const corsOptions = {
-    origin: function (origin, callback) {
-        logger.info("Request origin: ", origin); // This line will log the origin of each request
-
-        if (!origin || allowedDomains.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    optionsSuccessStatus: 200
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 };
 app.use(expressLogger);
 
